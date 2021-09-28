@@ -15,9 +15,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index( MovieEntityRepository $movieEntityRepository, Request $request): Response
+    public function index(MovieEntityRepository $movieEntityRepository, Request $request): Response
     {
-
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'movies' => $movieEntityRepository->getPopularMovies()
