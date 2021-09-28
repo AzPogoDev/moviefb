@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MovieController!{% endblock %}
+
+{% block body %}
+    <div class="container p-5">
+        <div class="d-flex justify-content-center">
+            <div class="card" style="width: 50%;">
+                <img class="card-img-top" src="http://image.tmdb.org/t/p/w185/{{ movie.backdrop_path }}"
+                     style="width: 100%;" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.overview }}</p>
+                    <h3>Genre :</h3>
+                    <ul class="list-group">
+                        {% for gender in movie.genres %}
+                            <li class="list-group-item">{{ gender.name }}</li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Poster :</h3>
+                    <img src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}"  style="width: 250px;" alt="">
+                    <h3>Compagnie de production :</h3>
+                    <ul class="list-group">
+                        {% for comp in movie.production_companies %}
+                            <li class="list-group-item">{{ comp.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
