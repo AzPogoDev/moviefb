@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}HomeController!{% endblock %}
+{% block title %}Favorites movies!{% endblock %}
 
 {% block body %}
 
@@ -14,6 +14,8 @@
 
     <div class="row row-eq-height">
         {% for movie in movies %}
+
+
             <div class="col-md-3">
                 <div class="card m-5" style="width: 18rem;min-height: 350px">
                     <div class="card-body">
@@ -22,15 +24,22 @@
 
                         <a href="{{ path("movie_post", {'id': movie.id }) }}" class="btn btn-primary">Go
                             somewhere</a>
+                        {% for favmovie in favmovies %}
 
+                            {% if favmovie.movie_id == movie.id %}
+                                <a href="{{ path('add_favorite', { 'title': movie.title, 'id' : movie.id}) }}"
+                                   class="btn btn-danger mt-2">Remove to favorite list</a>
+                            {% else %}
 
-                        <a href="{{ path('add_favorite', { 'title': movie.title, 'id' : movie.id}) }}"
-                           class="btn btn-danger"><i
-                                    class="far fa-heart"></i></a>
-
+                                <a href="{{ path('add_favorite', { 'title': movie.title, 'id' : movie.id}) }}"
+                                   class="btn btn-danger "><i
+                                            class="far fa-heart"></i></a>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+
         {% endfor %}
     </div>
 

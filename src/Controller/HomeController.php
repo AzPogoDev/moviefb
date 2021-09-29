@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\Security\Core\Security;
 
 class HomeController extends AbstractController
 {
@@ -32,10 +33,13 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(MovieEntityRepository $movieEntityRepository, Request $request): Response
+    public function index(MovieEntityRepository $movieEntityRepository, Request $request, Security $security): Response
     {
+        $moviesfav = $this->favoriteMovieRepository->getFavoritesMovies($security->getUser()->getUserIdentifier());
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+            'favmovies' => $moviesfav,
             'movies' => $movieEntityRepository->getPopularMovies()
         ]);
     }
@@ -46,12 +50,16 @@ class HomeController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function addToFavorite($title, Request $request): Response
+    public function addToFavorite($title, Request $request, Security $security): Response
     {
         $this->favoriteMovieRepository->addFavorite($title, $request->get('id'));
 
-        return $this->render('home/index.html.twig', [
-            'movies' => $this->movieEntityRepository->getPopularMovies()
-        ]);
+//        return $this->render('home/index.html.twig', [
+//            'movies' => $this->movieEntityRepository->getPopularMovies(),
+//            'favmovies' => $moviesfav,
+//        ]);
+//
+        return $this->redirectToRoute('home');
+
     }
 }
