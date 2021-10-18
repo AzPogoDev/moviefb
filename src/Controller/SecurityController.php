@@ -5,10 +5,28 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 
 class SecurityController extends AbstractController
 {
+    /**
+     * @Route("/account", name="app_account")
+     * @param Security $security
+     * @return Response
+     */
+    public function myAccount(Security $security): Response
+    {
+        if ($security->getUser()) {
+            $userconencted = $security->getUser();
+            return $this->render('user/myaccount.html.twig',
+                ['user' => $userconencted]);
+        }
+        return new Response("This action needs a valid token!", Codes::HTTP_FORBIDDEN);
+
+    }
+
     /**
      * @Route("/login", name="app_login")
      */

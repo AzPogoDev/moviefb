@@ -35,7 +35,12 @@ class HomeController extends AbstractController
      */
     public function index(MovieEntityRepository $movieEntityRepository, Request $request, Security $security): Response
     {
-        $moviesfav = $this->favoriteMovieRepository->getFavoritesMovies($security->getUser()->getUserIdentifier());
+        if ($security->getUser()) {
+            $moviesfav = $this->favoriteMovieRepository->getFavoritesMovies($security->getUser()->getUserIdentifier());
+        } else {
+            $moviesfav = [];
+        }
+
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',

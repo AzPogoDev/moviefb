@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MovieController!{% endblock %}
+
+{% block body %}
+    <div class="container p-5">
+        <div class="d-flex justify-content-center">
+            <div class="card" style="width: 50%;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.name }} - {{ user.surname }}</h5>
+                    <p class="card-text">{{ user.email }}</p>
+                    <p class="card-text">{{ user.phone }}</p>
+                    <p class="card-text">{{ user.age }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
